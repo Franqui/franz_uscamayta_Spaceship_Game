@@ -2,26 +2,26 @@ import pygame
 from random import randint
 from pygame.sprite import Sprite
 
-from game.utils.constants import ENEMY_1, SHIP_WIDTH, SHIP_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+from game.utils.constants import ENEMY_1, ENEMY_2, SHIP_WIDTH, SHIP_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Enemy(Sprite):
     Y_POS = 20
     SPEED_X = 5
     SPEED_Y = 1
     MOV_X = {0: 'left', 1: 'right'}
-    def __init__(self):
-        self.image = ENEMY_1
+    IMAGE = {1: ENEMY_1, 2: ENEMY_2}
+    def __init__(self, image_index = 1, speed_x = SPEED_X, speed_y = SPEED_Y, move_x_for = [30, 100]):
+        self.image = self.IMAGE[image_index]
         self.image = pygame.transform.scale(self.image, (SHIP_WIDTH, SHIP_HEIGHT))
         self.rect = self.image.get_rect()
         self.rect.x = randint(0, SCREEN_WIDTH)
         self.rect.y = self.Y_POS
         
-        self.speed_x = self.SPEED_X
-        self.speed_y = self.SPEED_Y
+        self.speed_x = speed_x
+        self.speed_y = speed_y
         self.movement_x = self.MOV_X[randint(0, 1)]
-        self.move_x_for = randint(30, 40)
-        self.step = 0
-        
+        self.move_x_for = randint(move_x_for[0], move_x_for[1])
+        self.step = 0       
         
     def update(self, enemies):
         self.rect.y += self.speed_y
