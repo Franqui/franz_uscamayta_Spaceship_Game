@@ -7,6 +7,14 @@ class BulletManager:
         self.enemy_bullets = []
         
     def update(self, game):
+        for bullet in self.bullets:
+            bullet.update(self.bullets)
+
+            for enemy in game.enemy_manager.enemies:
+                if bullet.rect.colliderect(enemy.rect) and bullet.owner != 'enemy':
+                    game.enemy_manager.enemies.remove(enemy)
+                    self.bullets.remove(bullet)
+
         for bullet in self.enemy_bullets:
             bullet.update(self.enemy_bullets)
             # colliderect verifica si el objeto coliciona con otro q le pasa como parametro
@@ -22,9 +30,13 @@ class BulletManager:
                 break
             
     def draw(self, screen):
+        for bullet in self.bullets:
+            bullet.draw(screen)
         for bullet in self.enemy_bullets:
             bullet.draw(screen)
             
     def add_bullet(self, bullet):
-        if bullet.owner == 'enemy' and len(self.enemy_bullets) < 1:
+        if bullet.owner == 'player' and len(self.bullets) < 3:
+            self.bullets.append(bullet)
+        elif bullet.owner == 'enemy' and len(self.enemy_bullets) < 1:
            self.enemy_bullets.append(bullet) 
