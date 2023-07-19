@@ -54,3 +54,7 @@ class Spaceship(Sprite):
     
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        
+    def reset(self):
+        self.rect.x = self.X_POS
+        self.rect.y = self.Y_POS
