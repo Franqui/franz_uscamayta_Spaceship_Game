@@ -14,6 +14,7 @@ class BulletManager:
                 if bullet.rect.colliderect(enemy.rect) and bullet.owner != 'enemy':
                     game.enemy_manager.enemies.remove(enemy)
                     self.bullets.remove(bullet)
+                    game.update_score()
 
         for bullet in self.enemy_bullets:
             bullet.update(self.enemy_bullets)
@@ -25,6 +26,7 @@ class BulletManager:
                 self.enemy_bullets.remove(bullet)
                 #poniendo en falso playing de game el juego termina
                 game.playing = False
+                game.death_count += 1
                 # espera con delay un segundo antes de terminar todo
                 pygame.time.delay(1000)
                 break
