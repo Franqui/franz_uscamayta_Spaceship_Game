@@ -25,11 +25,12 @@ class BulletManager:
                 #si colicionan entonces bullet es removido y el juego termina
                 self.enemy_bullets.remove(bullet)
                 #poniendo en falso playing de game el juego termina
-                game.playing = False
-                game.death_count.update()
-                # espera con delay un segundo antes de terminar todo
-                pygame.time.delay(1000)
-                break
+                if not game.player.has_power_up:
+                    game.playing = False
+                    game.death_count.update()
+                    # espera con delay un segundo antes de terminar todo
+                    pygame.time.delay(1000)
+                    break
             
     def draw(self, screen):
         for bullet in self.bullets:

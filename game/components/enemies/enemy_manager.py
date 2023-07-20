@@ -1,3 +1,4 @@
+import pygame
 from random import randint
 from game.components.enemies.enemy import Enemy
 
@@ -11,6 +12,15 @@ class EnemyManager:
         
         for enemy in self.enemies:
             enemy.update(self.enemies, game)
+            if enemy.rect.colliderect(game.player.rect):
+                self.enemies.remove(enemy)
+                #poniendo en falso playing de game el juego termina
+                if not game.player.has_power_up:
+                    game.playing = False
+                    game.death_count.update()
+                    # espera con delay un segundo antes de terminar todo
+                    pygame.time.delay(1000)
+                    break
 
     def draw(self, screen):
         for enemy in self.enemies:
